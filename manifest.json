@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+  "name": "Homina",
+  "short_name": "Homina",
+  "description": "Another new tab page.",
+  "version": "0.0.1",
+  "page_action": {
+  },
+  "icons": {
+    "16": "ref/img/icon16.png",
+    "48": "ref/img/icon48.png",
+    "128": "ref/img/icon128.png"
+  },
+  "background": {
+    "scripts": [
+    ]
+  },
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "permissions": [
+  ]
+}
