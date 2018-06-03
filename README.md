@@ -5,6 +5,8 @@ Summary
 -------
 [Vue.js](https://vuejs.org/)-powered new tab page for Google Chrome.
 
+[Find it on the Chrome Web Store &rsaquo;](https://chrome.google.com/webstore/detail/homina/fioieebccopjgmnhbgkcfnhaijefjjpj)
+
 Bugs
 ----
 No known bugs yet. To file a bug report, please send an email to
