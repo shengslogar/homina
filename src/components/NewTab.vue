@@ -1,9 +1,11 @@
 <template>
     <div id="new-tab" :style="{ backgroundColor: storage.settings.backgroundColor }">
+
+        <Settings :storage="storage" @update="saveSettings"/>
+
         <div id="new-tab-inner">
             <Clock :showSeconds="false" :militaryTime="storage.settings.clock.militaryTime" @click.native="toggleClockMode"/>
             <Weather :weatherUnits="storage.settings.weather.units" :cache="storage.cache.weather" @click.native="toggleWeatherMode" @updateCache="updateWeatherCache"/>
-            <Settings :storage="storage" @update="saveSettings"/>
         </div>
     </div>
 </template>
@@ -118,13 +120,13 @@
     }
 
     @media all and (max-width : 600px) {
-        #new-tab {
+        #new-tab-inner {
             transform : scale(0.8);
         }
     }
 
     @media all and (max-width : 400px) {
-        #new-tab {
+        #new-tab-inner {
             transform : scale(0.5);
         }
     }

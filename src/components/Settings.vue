@@ -65,7 +65,26 @@
             return {
                 visible: false,
                 settings: JSON.parse(JSON.stringify(this.storage)), // this clears out any observers and returns clean unVued data
-                colorPalette: ['#4f65ff', '#ff4fae', '#ff724f', '#4f9bff', '#ff4f5d', '#437179', '#bdbdbd', '#000000'],
+                colorPalette: [
+                    '#bb4237',
+                    '#ff4f5d',
+                    '#ff724f',
+                    '#f29b5f',
+                    '#ffd04f',
+                    '#64cb88',
+                    '#00af7d',
+                    '#1e7f63',
+                    '#437179',
+                    '#4f9bff',
+                    '#4f65ff',
+                    '#ba4fff',
+                    '#ff4f89',
+                    '#ff4fae',
+                    '#c3c3c3',
+                    '#aaaaaa',
+                    '#373737',
+                    '#000000'
+                ],
                 selectedColor: this.storage.settings.backgroundColor,
                 modals: {
                     resetSettings: false,
@@ -81,6 +100,7 @@
         position : fixed;
         top      : 20px;
         right    : 20px;
+        z-index  : 100;
     }
 
     .settings-blur-overlay {
