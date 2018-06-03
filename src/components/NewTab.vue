@@ -113,7 +113,7 @@
         }
     }
 
-    #new-tab > * {
+    #new-tab-inner > * {
         animation : new-tab-component--entrance .5s ease;
     }
 

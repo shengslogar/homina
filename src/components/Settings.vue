@@ -77,6 +77,12 @@
 </script>
 
 <style>
+    .settings {
+        position : fixed;
+        top      : 20px;
+        right    : 20px;
+    }
+
     .settings-blur-overlay {
         position   : fixed;
         top        : 0;
@@ -96,13 +102,13 @@
     }
 
     .settings-toggle {
-        position       : fixed;
+        position       : sticky;
         font-size      : 20px;
         letter-spacing : 1px;
         font-weight    : bold;
         opacity        : 0.3;
-        top            : 20px;
-        right          : 20px;
+        top            : 0;
+        right          : 0;
         padding        : 10px 10px;
         display        : inline-block;
         cursor         : pointer;
@@ -148,18 +154,18 @@
     }
 
     .settings-menu {
-        position      : fixed;
-        top           : 70px;
-        right         : 20px;
-        background    : #fff;
-        padding       : 12px 0;
-        box-shadow    : 0 2px 5px rgba(0, 0, 0, 0.08);
-        border-radius : 10px;
-        visibility    : hidden;
-        opacity       : 0;
-        transform     : scale(0.9);
-        transform-origin: 100% 0;
-        z-index       : 11;
+        position         : fixed;
+        top              : 70px;
+        right            : 20px;
+        background       : #fff;
+        padding          : 12px 0;
+        box-shadow       : 0 2px 5px rgba(0, 0, 0, 0.08);
+        border-radius    : 10px;
+        visibility       : hidden;
+        opacity          : 0;
+        transform        : scale(0.9);
+        transform-origin : 100% 0;
+        z-index          : 11;
     }
 
     .settings-menu.settings-menu--visible {
