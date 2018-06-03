@@ -17,10 +17,10 @@
 </script>
 
 <style>
-    * {
+    *, *:before, *:after {
         box-sizing          : border-box;
         transition          : .2s ease;
-        transition-property : opacity, transform, visibility;
+        transition-property : opacity, transform, visibility, border-color, background-color;
     }
 
     html {
@@ -29,7 +29,6 @@
         user-select : none;
         cursor      : default;
         height      : 100%;
-        background  : linear-gradient(163deg, #4f65ff, #4256e2);
     }
 
     body {
@@ -39,14 +38,28 @@
         color     : #fff;
     }
 
+    .btn {
+        font-size     : 1rem;
+        padding       : 10px 20px;
+        border        : 1px solid #ddd;
+        background    : #fff;
+        color         : #000;
+        display       : inline-block;
+        margin        : 0 4px;
+        border-radius : 20px;
+        text-align    : center;
+        cursor        : pointer;
+    }
+
+    .btn:hover {
+        border-color : #ccc;
+    }
+
     #app {
-        display         : flex;
-        align-items     : center;
-        justify-content : center;
-        position        : fixed;
-        top             : 0;
-        left            : 0;
-        right           : 0;
-        bottom          : 0;
+        position : fixed;
+        top      : 0;
+        left     : 0;
+        right    : 0;
+        bottom   : 0;
     }
 </style>

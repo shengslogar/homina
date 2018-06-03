@@ -154,9 +154,9 @@
             // cached data?
             if (this.cache !== null) {
 
-                this.weather = Object.assign(this.weather, this.cache.weather);
+                Object.assign(this.weather, this.cache.weather);
                 this.recomputeWeatherTemp(); // just in case, fringe case where setting changed but cache didn't update
-                this.coords = Object.assign(this.coords, this.cache.coords);
+                Object.assign(this.coords, this.cache.coords);
 
                 // wait a second -> save some api limits!
                 setTimeout(() => {

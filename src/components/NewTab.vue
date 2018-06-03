@@ -1,13 +1,17 @@
 <template>
-    <div id="new-tab">
-        <Clock :showSeconds="false" :militaryTime="storage.settings.clock.militaryTime" @click.native="toggleClockMode"/>
-        <Weather :weatherUnits="storage.settings.weather.units" :cache="storage.cache.weather" @click.native="toggleWeatherMode" @updateCache="updateWeatherCache"/>
+    <div id="new-tab" :style="{ backgroundColor: storage.settings.backgroundColor }">
+        <div id="new-tab-inner">
+            <Clock :showSeconds="false" :militaryTime="storage.settings.clock.militaryTime" @click.native="toggleClockMode"/>
+            <Weather :weatherUnits="storage.settings.weather.units" :cache="storage.cache.weather" @click.native="toggleWeatherMode" @updateCache="updateWeatherCache"/>
+            <Settings :storage="storage" @update="saveSettings"/>
+        </div>
     </div>
 </template>
 
 <script>
     import Clock from '@/components/Clock';
     import Weather from '@/components/Weather';
+    import Settings from '@/components/Settings';
 
     export default {
         name: 'NewTab',
@@ -16,6 +20,7 @@
             return {
                 storage: {
                     settings: {
+                        backgroundColor: '#4f65ff',
                         clock: {
                             militaryTime: false
                         },
@@ -37,13 +42,6 @@
                     localStorage.setItem(this.storage.settings.storageKey, JSON.stringify(this.storage));
                 },
                 deep: true
-            },
-            _storage: {
-                handler() {
-                    console.log('local storage update')
-                },
-                deep: true
-
             }
         },
         methods: {
@@ -61,13 +59,20 @@
                 const savedSession = localStorage.getItem(this.storage.settings.storageKey);
 
                 if (savedSession !== null) {
-                    this.storage = JSON.parse(savedSession);
+                    Object.assign(this.storage, JSON.parse(savedSession));
                 }
+            },
+            /**
+             * settings panel updated, save changes
+             */
+            saveSettings(newSettings) {
+                Object.assign(this.storage.settings, newSettings);
             }
         },
         components: {
             Clock,
-            Weather
+            Weather,
+            Settings
         },
 
         beforeMount() {
@@ -83,6 +88,19 @@
 
 <style scoped>
     #new-tab {
+        position            : fixed;
+        top                 : 0;
+        left                : 0;
+        right               : 0;
+        bottom              : 0;
+        display             : flex;
+        align-items         : center;
+        justify-content     : center;
+        background          : #222;
+        transition-duration : 3s; /* bg color transition */
+    }
+
+    #new-tab-inner {
         width     : 90%;
         max-width : 500px;
         min-width : 400px;
