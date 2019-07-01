@@ -1,132 +1,185 @@
 <template>
   <div class="clock">
-    <div class="clock-hours">{{ time.hours }}</div>
-    <div class="clock-separator"></div>
-    <div class="clock-minutes">{{ time.minutes }}</div>
+    <span class="clock__hour">
+      {{ time.hours }}
+    </span>
+    <span class="clock__separator"/>
+    <span class="clock__minute">
+      {{ time.minutes }}
+    </span>
 
+    <template v-if="hasSeconds">
+      <span class="clock__separator"/>
+      <div class="clock__second">
+        {{ time.seconds }}
+      </div>
+    </template>
 
-    <div v-if="showSeconds" class="clock-separator"></div>
-    <div v-if="showSeconds" class="clock-seconds">{{ time.seconds }}</div>
-
-    <div class="clock-ap" v-if="!militaryTime" :class="{ 'clock-ap--pm': time.pm }">
-      <span class="clock-ap-a">AM</span>
-      <span class="clock-ap-p">PM</span>
+    <div v-if="!isMilitary"
+         :class="['clock__ap', apClassList]">
+      <span class="clock__ap-am">
+        AM
+      </span>
+      <span class="clock__ap-pm">
+        PM
+      </span>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Clock',
-  props: {
-    showSeconds: {
+  name    : 'Clock',
+  props   : {
+    hasSeconds: {
       default: false,
-      type: Boolean,
+      type   : Boolean,
     },
-    militaryTime: {
+    isMilitary: {
       default: false,
-      type: Boolean,
+      type   : Boolean,
     },
   },
   data() {
     return {
-      time: {
-        hours: 0,
+      time : {
+        hours  : 0,
         minutes: 0,
         seconds: 0,
-        pm: null,
+        isPM   : null,
       },
-      timerCache: null,
+      timer: null,
     };
   },
-  methods: {
+  computed: {
+    apClassList() {
+      return {
+        'clock__ap--am': !this.time.isPM,
+        'clock__ap--pm': this.time.isPM,
+      };
+    },
+  },
+  methods : {
+    formatClockDigits(value) {
+      if (value.toString().length < 2) {
+        return `0${value}`;
+      }
+      return `${value}`;
+    },
     updateTime() {
-      const now = new Date();
+      const now        = new Date();
+      const nowHours   = now.getHours();
+      const nowMinutes = now.getMinutes();
+      const nowSeconds = now.getSeconds();
 
-      let h = now.getHours();
-      let m = now.getMinutes();
-      let s = now.getSeconds();
-      const pm = h > 11;
-
-      if (!this.militaryTime) {
-
-        if (h > 12) {
-          h -= 12;
-        }
-        else if (h == 0) {
-          h = 12;
-        }
+      if (this.isMilitary) {
+        this.time.hours = this.formatClockDigits(nowHours);
+      } else {
+        this.time.hours = nowHours > 12
+          ? nowHours - 12
+          : (nowHours === 0 ? 12 : nowHours);
       }
+      this.time.minutes = this.formatClockDigits(nowMinutes);
+      this.time.seconds = this.formatClockDigits(nowSeconds);
 
-      if (m < 10) {
-        m = '0' + m;
-      }
-
-      if (s < 10) {
-        s = '0' + s;
-      }
-
-      this.time.hours = h.toString();
-      this.time.minutes = m.toString();
-      this.time.seconds = s.toString();
-      this.time.pm = pm;
-
-      // update at next tick
-      clearTimeout(this.timerCache); // prevent any loops
-      this.timerCache = setTimeout(() => {
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
         this.updateTime();
       }, 1000 - now.getMilliseconds());
     },
   },
-  watch: {
-    militaryTime() {
+  watch   : {
+    hasSeconds() {
       this.updateTime();
     },
-    showSeconds() {
+    isMilitary() {
       this.updateTime();
     },
   },
-
   created() {
     this.updateTime();
   },
 }
 </script>
 
-<style scoped>
+<style lang="scss">
+@keyframes clock--entrance {
+  from {
+    opacity   : 0;
+    transform : translateY(1rem);
+  }
+}
+
 .clock {
-  display    : block;
-  text-align : center;
-}
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  color           : rgba(255, 255, 255, .9);
+  text-align      : center;
+  animation       : clock--entrance 300ms ease;
+  position        : relative;
+  z-index         : 10;
 
-.clock > * {
-  display        : inline-block;
-  font-size      : 10rem;
-  font-weight    : normal;
-  vertical-align : baseline;
-}
+  &__hour,
+  &__minute,
+  &__second,
+  &__separator,
+  &__ap {
+    display         : flex;
+    flex-direction  : column;
+    justify-content : center;
+    align-items     : center;
+    height          : 7rem;
+    text-shadow     : 0 0 .25rem rgba(0, 0, 0, .25);
+  }
 
-.clock-separator:before {
-  content : ':';
-}
+  &__hour,
+  &__minute,
+  &__second {
+    font-size : 10rem;
+  }
 
-.clock-separator {
-  margin : 0 8px;
-}
+  &__hour {
+    padding : 0 1rem;
+  }
 
-.clock-ap {
-  margin-left : 10px;
-}
+  &__minute,
+  &__second {
+    width : 14rem;
+  }
 
-.clock-ap > span {
-  font-size  : 1rem;
-  display    : block;
-  margin-top : 4px;
-  opacity    : 0.2;
-}
+  &__separator {
+    width    : 2rem;
+    position : relative;
+    opacity  : .8;
 
-.clock-ap:not(.clock-ap--pm) > .clock-ap-a,
-.clock-ap.clock-ap--pm > .clock-ap-p {
-  opacity : 1;
+    &::before,
+    &::after {
+      content    : "";
+      background : #ffffff;
+      height     : 10px;
+      width      : 10px;
+      margin     : 1rem 0;
+    }
+  }
+
+  &__ap {
+    justify-content : flex-end;
+
+    &-am,
+    &-pm {
+      font-size  : .8rem;
+      opacity    : .25;
+      margin-top : .5rem;
+    }
+
+    &--pm &-pm {
+      opacity : 1;
+    }
+
+    &--am &-am {
+      opacity : 1;
+    }
+  }
 }
 </style>

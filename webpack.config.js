@@ -1,18 +1,14 @@
-// // webpack.config.js
-// module.exports = {
-//     module: {
-//         rules: [
-//             {
-//                 test: /\.(ico|json)$/,
-//                 use: [
-//                     {
-//                         loader: 'file-loader',
-//                         options: {
-//                             outputPath: '/'
-//                         }
-//                     }
-//                 ]
-//             }
-//         ]
-//     }
-// }
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.scss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'sass-loader',
+        ],
+      },
+    ],
+  },
+};
