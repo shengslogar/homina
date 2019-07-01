@@ -3,7 +3,7 @@
   "name": "Homina",
   "short_name": "Homina",
   "description": "Another new tab page.",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "page_action": {
   },
   "icons": {
