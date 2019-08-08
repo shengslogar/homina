@@ -54,7 +54,6 @@ export default {
   opacity             : 0;
   visibility          : hidden;
   display             : flex;
-  justify-content     : center;
   background          : rgba(0, 0, 0, 0.5);
   transition-duration : .4s;
   overflow            : auto;
@@ -80,7 +79,7 @@ export default {
   box-shadow          : 0 5px 10px rgba(0, 0, 0, 0.2);
   transform           : scale(1.2);
   transition-duration : .3s;
-  margin              : auto 0;
+  margin              : auto;
 }
 
 .modal--visible > .modal-body {

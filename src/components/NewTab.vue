@@ -97,7 +97,6 @@ export default {
   right               : 0;
   bottom              : 0;
   display             : flex;
-  justify-content     : center;
   background          : #222222;
   /* background color transition */
   transition-duration : 3s;
@@ -105,12 +104,10 @@ export default {
 }
 
 #new-tab-inner {
-  width     : 90%;
-  max-width : 500px;
-  min-width : 400px;
-  flex      : 0 0 auto;
-  margin    : auto 0;
-  padding   : 4rem 0;
+  width   : 600px;
+  flex    : 0 0 auto;
+  margin  : auto;
+  padding : 4rem;
 }
 
 @keyframes new-tab-component--entrance {
@@ -122,18 +119,6 @@ export default {
 
 #new-tab-inner > * {
   animation : new-tab-component--entrance .5s ease;
-}
-
-@media all and (max-width : 600px) {
-  #new-tab-inner {
-    transform : scale(0.8);
-  }
-}
-
-@media all and (max-width : 400px) {
-  #new-tab-inner {
-    transform : scale(0.5);
-  }
 }
 
 </style>

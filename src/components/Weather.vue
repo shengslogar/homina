@@ -137,7 +137,6 @@ export default {
   created() {
     // cached data?
     if (this.cache !== null) {
-
       Object.assign(this.weather, this.cache.weather);
       this.recomputeWeatherTemp(); // just in case, fringe case where setting changed but cache didn't update
       Object.assign(this.coords, this.cache.coords);
@@ -173,9 +172,9 @@ export default {
 
 .weather-container {
   text-align : center;
-  padding    : 40px 0;
+  padding    : 40px 0 0;
   margin-top : 20px;
-  height     : 150px;
+  min-height : 100px;
   position   : relative;
 }
 
