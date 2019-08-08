@@ -97,16 +97,20 @@ export default {
   right               : 0;
   bottom              : 0;
   display             : flex;
-  align-items         : center;
   justify-content     : center;
   background          : #222222;
-  transition-duration : 3s; /* bg color transition */
+  /* background color transition */
+  transition-duration : 3s;
+  overflow            : auto;
 }
 
 #new-tab-inner {
   width     : 90%;
   max-width : 500px;
   min-width : 400px;
+  flex      : 0 0 auto;
+  margin    : auto 0;
+  padding   : 4rem 0;
 }
 
 @keyframes new-tab-component--entrance {

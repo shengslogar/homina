@@ -205,8 +205,7 @@ export default {
 }
 
 .weather > * {
-  flex    : 1 1 auto;
-  padding : 0 1rem;
+  flex : 1 1 auto;
 }
 
 .weather-spinner {
@@ -223,6 +222,7 @@ export default {
 .weather-now {
   font-size   : 1rem;
   flex-shrink : 0;
+  padding     : 0 1.5rem;
 }
 
 .weather-now-temp {
@@ -237,6 +237,7 @@ export default {
 }
 
 .weather-location {
+  padding     : 0 1rem;
   font-size   : 1rem;
   border-left : 1px solid rgba(255, 255, 255, 0.5);
 }

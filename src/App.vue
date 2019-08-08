@@ -31,7 +31,8 @@ html {
 }
 
 body {
-  font      : inherit; /* chrome injects styles that would otherwise override */
+  /* chrome injects styles that would otherwise override */
+  font      : inherit;
   font-size : 0;
   margin    : 0;
   color     : #ffffff;
