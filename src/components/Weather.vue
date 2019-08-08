@@ -12,11 +12,8 @@
           </span>
         </div>
         <div class="weather-location">
-          <span class="weather-location-city">
+          <span class="weather-location-city" :title="coordsTooltipText">
             {{ weather.location }}
-          </span>
-          <span class="weather-location-coords">
-            ({{ Math.round(coords.long) }}, {{ Math.round(coords.lat) }})
           </span>
         </div>
       </div>
@@ -59,9 +56,7 @@ export default {
     };
   },
   methods: {
-
     async getWeather() {
-
       this.weather.loading = true;
 
       try {
@@ -97,9 +92,7 @@ export default {
           break;
       }
     },
-
     async getLocation() {
-
       this.coords.loading = true;
 
       await new Promise((resolve, reject) => {
@@ -124,7 +117,6 @@ export default {
           });
       });
     },
-
     async refreshWeather() {
       await this.getLocation();
       await this.getWeather();
@@ -138,6 +130,11 @@ export default {
         this.refreshWeather();
       }, 60000);
     },
+  },
+  computed: {
+    coordsTooltipText() {
+      return `(${Math.round(this.coords.long)}, ${Math.round(this.coords.lat)})`;
+    }
   },
   watch: {
     weatherUnits() {
@@ -164,84 +161,83 @@ export default {
 </script>
 
 <style scoped>
-  .slideYFade-enter-active,
-  .slideYFade-leave-active {
-    transition-duration: .4s;
+.slideYFade-enter-active,
+.slideYFade-leave-active {
+  transition-duration : .4s;
+}
+
+.slideYFade-enter,
+.slideYFade-leave-to {
+  opacity   : 0;
+  transform : translateY(10px);
+}
+
+@keyframes weather-container-before--entrance {
+  0% {
+    opacity : 0;
   }
+}
 
-  .slideYFade-enter,
-  .slideYFade-leave-to {
-    opacity: 0;
-    transform: translateY(10px);
-  }
+.weather-container {
+  text-align : center;
+  padding    : 40px 0;
+  margin-top : 20px;
+  height     : 150px;
+  position   : relative;
+}
 
-  @keyframes weather-container-before--entrance {
-    0% {
-      /*transform : scaleX(1.2);*/
-      opacity: 0;
-    }
-  }
+.weather-container:before {
+  content    : '';
+  display    : block;
+  position   : absolute;
+  background : rgba(255, 255, 255, 0.5);
+  height     : 2px;
+  top        : -1px;
+  left       : 0;
+  right      : 0;
+  animation  : weather-container-before--entrance 2.5s ease;
+}
 
-  .weather-container {
-    text-align: center;
-    padding: 40px 0;
-    margin-top: 20px;
-    height: 150px;
-    position: relative;
-  }
+.weather {
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+}
 
-  .weather-container:before {
-    content: '';
-    display: block;
-    position: absolute;
-    background: rgba(255, 255, 255, 0.5);
-    height: 2px;
-    top: -1px;
-    left: 0;
-    right: 0;
-    animation: weather-container-before--entrance 2.5s ease;
+.weather > * {
+  flex    : 1 1 auto;
+  padding : 0 1rem;
+}
 
-  }
+.weather-spinner {
+  position        : absolute;
+  top             : 0;
+  bottom          : 0;
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  left            : 0;
+  right           : 0;
+}
 
-  .weather > * {
-    display: inline-block;
-    vertical-align: middle;
-    width: 50%;
-  }
+.weather-now {
+  font-size   : 1rem;
+  flex-shrink : 0;
+}
 
-  .weather-spinner {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    left: 0;
-    right: 0;
-  }
+.weather-now-temp {
+  font-size : 3rem;
+}
 
-  .weather-now {
-    font-size: 1rem;
-  }
+.weather-now-units {
+  vertical-align : top;
+  margin-top     : 10px;
+  margin-left    : -5px;
+  display        : inline-block;
+}
 
-  .weather-now-temp {
-    font-size: 3rem;
-  }
-
-  .weather-now-units {
-    vertical-align: top;
-    margin-top: 10px;
-    margin-left: -5px;
-    display: inline-block;
-  }
-
-  .weather-location {
-    font-size: 1rem;
-    border-left: 1px solid rgba(255, 255, 255, 0.5);
-  }
-
-  .weather-location-coords {
-    opacity: 0.5;
-  }
-
+.weather-location {
+  font-size   : 1rem;
+  border-left : 1px solid rgba(255, 255, 255, 0.5);
+}
 </style>
