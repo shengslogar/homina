@@ -18,6 +18,7 @@
       <div style="text-align: center">
         <span class="settings-color-modal-swatch"
               v-for="hash in colorPalette"
+              :key="hash"
               :style="{ backgroundColor: hash }"
               :class="{ 'settings-color-modal-swatch--selected': (selectedColor === hash) }"
               @click="selectedColor = hash; "></span>
@@ -32,7 +33,6 @@
 </template>
 
 <script>
-
 import Modal from '@/components/Modal';
 
 export default {
