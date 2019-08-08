@@ -16,11 +16,11 @@
     <Modal id="settings-color-modal" :visible="modals.colorPicker" title="Choose Your Flavor"
            @action="setBackgroundColor(); modals.colorPicker = false;" @cancel="modals.colorPicker = false">
       <div style="text-align: center">
-                <span class="settings-color-modal-swatch"
-                      v-for="hash in colorPalette"
-                      :style="{ backgroundColor: hash }"
-                      :class="{ 'settings-color-modal-swatch--selected': (selectedColor === hash) }"
-                      @click="selectedColor = hash; "></span>
+        <span class="settings-color-modal-swatch"
+              v-for="hash in colorPalette"
+              :style="{ backgroundColor: hash }"
+              :class="{ 'settings-color-modal-swatch--selected': (selectedColor === hash) }"
+              @click="selectedColor = hash; "></span>
       </div>
     </Modal>
 
@@ -37,7 +37,7 @@ import Modal from '@/components/Modal';
 
 export default {
   name: 'Settings',
-  components: { Modal },
+  components: {Modal},
   props: {
     storage: null,
   },

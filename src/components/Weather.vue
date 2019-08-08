@@ -1,26 +1,23 @@
 <template>
   <div class="weather-container">
     <transition name="slideYFade">
-      <!-- Weather loading... -->
       <Spinner v-if="coords.updated === null || weather.updated === null" class="weather-spinner"/>
-
       <div v-else class="weather">
-
         <div class="weather-now">
-                <span class="weather-now-temp">
-                    {{ Math.round(weather.temperature * 10)/10 }}
-                </span>
+          <span class="weather-now-temp">
+            {{ Math.round(weather.temperature * 10)/10 }}
+          </span>
           <span class="weather-now-units">
-                    &deg;{{ weather.units }}
-                </span>
+            &deg;{{ weather.units }}
+          </span>
         </div>
         <div class="weather-location">
-                <span class="weather-location-city">
-                    {{ weather.location }}
-                </span>
+          <span class="weather-location-city">
+            {{ weather.location }}
+          </span>
           <span class="weather-location-coords">
-                    ({{ Math.round(coords.long) }}, {{ Math.round(coords.lat) }})
-                </span>
+            ({{ Math.round(coords.long) }}, {{ Math.round(coords.lat) }})
+          </span>
         </div>
       </div>
     </transition>
@@ -68,7 +65,7 @@ export default {
       this.weather.loading = true;
 
       try {
-        const request = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${this.coords.lat }&lon=${this.coords.long}&appid=${ this.weather.apiKey }`)
+        const request = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${this.coords.lat}&lon=${this.coords.long}&appid=${this.weather.apiKey}`)
           .then(response => response.json());
 
         this.weather.rawTemp = request.main.temp;
@@ -79,8 +76,7 @@ export default {
 
 
         this.recomputeWeatherTemp();
-      }
-      catch (err) {
+      } catch (err) {
         console.error('Error loading weather', err);
       }
     },
@@ -160,8 +156,7 @@ export default {
       setTimeout(() => {
         this.refreshWeather();
       }, 1000);
-    }
-    else {
+    } else {
       this.refreshWeather();
     }
   },
@@ -169,84 +164,84 @@ export default {
 </script>
 
 <style scoped>
-.slideYFade-enter-active,
-.slideYFade-leave-active {
-  transition-duration : .4s;
-}
-
-.slideYFade-enter,
-.slideYFade-leave-to {
-  opacity   : 0;
-  transform : translateY(10px);
-}
-
-@keyframes weather-container-before--entrance {
-  0% {
-    /*transform : scaleX(1.2);*/
-    opacity : 0;
+  .slideYFade-enter-active,
+  .slideYFade-leave-active {
+    transition-duration: .4s;
   }
-}
 
-.weather-container {
-  text-align : center;
-  padding    : 40px 0;
-  margin-top : 20px;
-  height     : 150px;
-  position   : relative;
-}
+  .slideYFade-enter,
+  .slideYFade-leave-to {
+    opacity: 0;
+    transform: translateY(10px);
+  }
 
-.weather-container:before {
-  content    : '';
-  display    : block;
-  position   : absolute;
-  background : rgba(255, 255, 255, 0.5);
-  height     : 2px;
-  top        : -1px;
-  left       : 0;
-  right      : 0;
-  animation  : weather-container-before--entrance 2.5s ease;
+  @keyframes weather-container-before--entrance {
+    0% {
+      /*transform : scaleX(1.2);*/
+      opacity: 0;
+    }
+  }
 
-}
+  .weather-container {
+    text-align: center;
+    padding: 40px 0;
+    margin-top: 20px;
+    height: 150px;
+    position: relative;
+  }
 
-.weather > * {
-  display        : inline-block;
-  vertical-align : middle;
-  width          : 50%;
-}
+  .weather-container:before {
+    content: '';
+    display: block;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.5);
+    height: 2px;
+    top: -1px;
+    left: 0;
+    right: 0;
+    animation: weather-container-before--entrance 2.5s ease;
 
-.weather-spinner {
-  position        : absolute;
-  top             : 0;
-  bottom          : 0;
-  display         : flex;
-  align-items     : center;
-  justify-content : center;
-  left            : 0;
-  right           : 0;
-}
+  }
 
-.weather-now {
-  font-size : 1rem;
-}
+  .weather > * {
+    display: inline-block;
+    vertical-align: middle;
+    width: 50%;
+  }
 
-.weather-now-temp {
-  font-size : 3rem;
-}
+  .weather-spinner {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 0;
+    right: 0;
+  }
 
-.weather-now-units {
-  vertical-align : top;
-  margin-top     : 10px;
-  margin-left    : -5px;
-  display        : inline-block;
-}
+  .weather-now {
+    font-size: 1rem;
+  }
 
-.weather-location {
-  font-size   : 1rem;
-  border-left : 1px solid rgba(255, 255, 255, 0.5);
-}
+  .weather-now-temp {
+    font-size: 3rem;
+  }
 
-.weather-location-coords {
-  opacity : 0.5;
-}
+  .weather-now-units {
+    vertical-align: top;
+    margin-top: 10px;
+    margin-left: -5px;
+    display: inline-block;
+  }
+
+  .weather-location {
+    font-size: 1rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+  }
+
+  .weather-location-coords {
+    opacity: 0.5;
+  }
 
 </style>

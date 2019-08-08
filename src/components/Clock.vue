@@ -4,7 +4,6 @@
     <div class="clock-separator"></div>
     <div class="clock-minutes">{{ time.minutes }}</div>
 
-
     <div v-if="showSeconds" class="clock-separator"></div>
     <div v-if="showSeconds" class="clock-seconds">{{ time.seconds }}</div>
 
@@ -52,8 +51,7 @@ export default {
 
         if (h > 12) {
           h -= 12;
-        }
-        else if (h == 0) {
+        } else if (h == 0) {
           h = 12;
         }
       }
