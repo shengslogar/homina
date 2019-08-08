@@ -1,13 +1,15 @@
 <template>
-  <div class="modal" :class="{ 'modal--visible': visible }">
+  <div class="modal" :class="{ 'modal--visible': visible, 'modal--transitioning': transitioning }"
+       @transitionstart="handleTransitionStart"
+       @transitionend="handleTransitionEnd">
     <div class="modal-body">
       <div class="modal-title">{{ title }}</div>
       <div class="modal-content">
         <slot></slot>
       </div>
       <div class="modal-buttons">
-        <a class="btn btn--link" @click="$emit('cancel');">Cancel</a>
-        <a class="btn" @click="$emit('action');">OK</a>
+        <a class="btn btn--link" @click="$emit('cancel')">Cancel</a>
+        <a class="btn" @click="$emit('action')">OK</a>
       </div>
     </div>
   </div>
@@ -21,6 +23,23 @@ export default {
     content: null,
     visible: false,
   },
+  data() {
+    return {
+      transitioning: false
+    };
+  },
+  methods: {
+    handleTransitionStart({target}) {
+      if (target === this.$el) {
+        this.transitioning = true;
+      }
+    },
+    handleTransitionEnd({target}) {
+      if (target === this.$el) {
+        this.transitioning = false;
+      }
+    }
+  }
 }
 </script>
 
@@ -35,15 +54,20 @@ export default {
   opacity             : 0;
   visibility          : hidden;
   display             : flex;
-  align-items         : center;
   justify-content     : center;
   background          : rgba(0, 0, 0, 0.5);
   transition-duration : .4s;
+  overflow            : auto;
+  padding             : 1rem 0;
 }
 
 .modal--visible {
   opacity    : 1;
   visibility : visible;
+}
+
+.modal--transitioning {
+  overflow : hidden;
 }
 
 .modal-body {
@@ -56,6 +80,7 @@ export default {
   box-shadow          : 0 5px 10px rgba(0, 0, 0, 0.2);
   transform           : scale(1.2);
   transition-duration : .3s;
+  margin              : auto 0;
 }
 
 .modal--visible > .modal-body {

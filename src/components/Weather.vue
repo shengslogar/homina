@@ -59,21 +59,16 @@ export default {
     async getWeather() {
       this.weather.loading = true;
 
-      try {
-        const request = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${this.coords.lat}&lon=${this.coords.long}&appid=${this.weather.apiKey}`)
-          .then(response => response.json());
+      const request = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${this.coords.lat}&lon=${this.coords.long}&appid=${this.weather.apiKey}`)
+        .then(response => response.json());
 
-        this.weather.rawTemp = request.main.temp;
-        this.weather.description = request.weather[0].description;
-        this.weather.location = request.name;
-        this.weather.loading = false;
-        this.weather.updated = (+new Date());
+      this.weather.rawTemp = request.main.temp;
+      this.weather.description = request.weather[0].description;
+      this.weather.location = request.name;
+      this.weather.loading = false;
+      this.weather.updated = (+new Date());
 
-
-        this.recomputeWeatherTemp();
-      } catch (err) {
-        console.error('Error loading weather', err);
-      }
+      this.recomputeWeatherTemp();
     },
     recomputeWeatherTemp() {
       this.weather.units = this.weatherUnits;
@@ -106,14 +101,12 @@ export default {
             if (resolve)
               resolve.apply(this.coords);
           },
-          (error) => { // failure
-
+          () => {
             this.coords.loading = false;
 
-            if (reject)
+            if (reject) {
               reject.apply();
-
-            console.error('GeoLocationApi', error);
+            }
           });
       });
     },
