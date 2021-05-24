@@ -3,9 +3,10 @@
     <transition name="slideYFade">
       <Spinner v-if="coords.updated === null || weather.updated === null" class="weather-spinner"/>
       <div v-else class="weather">
-        <div class="weather-now">
+        <div class="weather-now"
+             @click="$emit('temperatureClicked')">
           <span class="weather-now-temp">
-            {{ Math.round(weather.temperature * 10)/10 }}
+            {{ Math.round(weather.temperature) }}
           </span>
           <span class="weather-now-units">
             &deg;{{ weather.units }}
@@ -59,7 +60,7 @@ export default {
     async getWeather() {
       this.weather.loading = true;
 
-      const request = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${this.coords.lat}&lon=${this.coords.long}&appid=${this.weather.apiKey}`)
+      const request = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${this.coords.lat}&lon=${this.coords.long}&appid=${this.weather.apiKey}`)
         .then(response => response.json());
 
       this.weather.rawTemp = request.main.temp;
@@ -92,7 +93,7 @@ export default {
 
       await new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(
-          (response) => { // success
+          (response) => {
             this.coords.lat = response.coords.latitude;
             this.coords.long = response.coords.longitude;
             this.coords.updated = +(new Date());
@@ -167,27 +168,27 @@ export default {
 @keyframes weather-container-before--entrance {
   0% {
     opacity : 0;
+    transform: scaleX(.1);
   }
 }
 
 .weather-container {
   text-align : center;
-  padding    : 40px 0 0;
-  margin-top : 20px;
-  min-height : 100px;
+  padding    : 30px 0 0;
+  margin-top : 15px;
   position   : relative;
 }
 
-.weather-container:before {
+.weather-container::before {
   content    : '';
   display    : block;
   position   : absolute;
-  background : rgba(255, 255, 255, 0.5);
-  height     : 2px;
-  top        : -1px;
+  background : rgba(255, 255, 255, .5);
+  height     : 1px;
+  top        : -.5px;
   left       : 0;
   right      : 0;
-  animation  : weather-container-before--entrance 2.5s ease;
+  animation  : weather-container-before--entrance .3s ease;
 }
 
 .weather {
@@ -211,26 +212,19 @@ export default {
   right           : 0;
 }
 
+.weather-now,
+.weather-location {
+  padding: 0 1rem;
+  flex-basis: 50%;
+}
+
 .weather-now {
-  font-size   : 1rem;
-  flex-shrink : 0;
-  padding     : 0 1.5rem;
-}
-
-.weather-now-temp {
-  font-size : 3rem;
-}
-
-.weather-now-units {
-  vertical-align : top;
-  margin-top     : 10px;
-  margin-left    : -5px;
-  display        : inline-block;
+  font-size: 1.75rem;
+  font-weight: 300;
 }
 
 .weather-location {
-  padding     : 0 1rem;
-  font-size   : 1rem;
-  border-left : 1px solid rgba(255, 255, 255, 0.5);
+  font-size: 1rem;
+  border-left : 1px solid rgba(255, 255, 255, .5);
 }
 </style>

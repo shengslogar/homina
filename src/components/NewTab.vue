@@ -6,7 +6,7 @@
     <div id="new-tab-inner">
       <Clock :showSeconds="false" :militaryTime="storage.settings.clock.militaryTime" @click.native="toggleClockMode"/>
       <Weather :weatherUnits="storage.settings.weather.units" :cache="storage.cache.weather"
-               @click.native="toggleWeatherMode" @updateCache="updateWeatherCache"/>
+               @temperatureClicked="toggleWeatherMode" @updateCache="updateWeatherCache"/>
     </div>
   </div>
 </template>
@@ -18,7 +18,6 @@ import Settings from '@/components/Settings';
 
 export default {
   name: 'NewTab',
-  props: {},
   data() {
     return {
       storage: {
@@ -41,7 +40,7 @@ export default {
   watch: {
     storage: {
       handler() {
-        // save settings to storage
+        // Save settings to storage
         localStorage.setItem(this.storage.settings.storageKey, JSON.stringify(this.storage));
       },
       deep: true,
@@ -52,7 +51,11 @@ export default {
       this.storage.settings.clock.militaryTime = !this.storage.settings.clock.militaryTime;
     },
     toggleWeatherMode() {
-      this.storage.settings.weather.units = (this.storage.settings.weather.units == 'F' ? 'C' : (this.storage.settings.weather.units == 'C' ? 'K' : 'F'));
+      this.storage.settings.weather.units = (this.storage.settings.weather.units === 'F'
+          ? 'C'
+          : (this.storage.settings.weather.units === 'C'
+              ? 'K'
+              : 'F'));
     },
     updateWeatherCache(cachedData) {
       this.storage.cache.weather = cachedData;
@@ -65,9 +68,6 @@ export default {
         Object.assign(this.storage, JSON.parse(savedSession));
       }
     },
-    /**
-     * settings panel updated, save changes
-     */
     saveSettings(newSettings) {
       Object.assign(this.storage.settings, newSettings);
     },

@@ -104,7 +104,7 @@ export default {
   vertical-align : baseline;
 }
 
-.clock-separator:before {
+.clock-separator::before {
   content : ':';
 }
 
@@ -120,7 +120,7 @@ export default {
   font-size  : 1rem;
   display    : block;
   margin-top : 4px;
-  opacity    : 0.2;
+  opacity    : .2;
 }
 
 .clock-ap:not(.clock-ap--pm) > .clock-ap-a,

@@ -13,7 +13,7 @@
 
     <!-- Modals -->
 
-    <Modal id="settings-color-modal" :visible="modals.colorPicker" title="Choose Your Flavor"
+    <Modal id="settings-color-modal" :visible="modals.colorPicker" title="Change Color"
            @action="setBackgroundColor(); modals.colorPicker = false;" @cancel="modals.colorPicker = false">
       <div style="text-align: center">
         <span class="settings-color-modal-swatch"
@@ -137,7 +137,7 @@ export default {
   z-index        : 11;
 }
 
-.settings-toggle:before {
+.settings-toggle::before {
   content       : '';
   position      : absolute;
   top           : 0;
@@ -147,7 +147,7 @@ export default {
   border-radius : 10px;
   background    : #ffffff;
   opacity       : 0;
-  transform     : scaleY(.5);
+  transform     : scale(.8);
   z-index       : 0;
 }
 
@@ -156,7 +156,7 @@ export default {
   opacity : 1;
 }
 
-.settings-toggle--active:before {
+.settings-toggle--active::before {
   opacity   : 1;
   transform : none;
 }
@@ -185,8 +185,7 @@ export default {
   border-radius    : 10px;
   visibility       : hidden;
   opacity          : 0;
-  transform        : scale(0.9);
-  transform-origin : 100% 0;
+  transform        : scale(.9);
   z-index          : 11;
 }
 
@@ -209,7 +208,6 @@ export default {
   background-color : #dddddd;
 }
 
-/* */
 .settings-color-modal-swatch {
   width         : 40px;
   height        : 40px;
