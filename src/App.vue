@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import NewTab from './components/NewTab.vue'
+import NewTab from '@/components/NewTab.vue'
 
 export default {
   name: 'app',
@@ -31,7 +31,7 @@ html {
 }
 
 body {
-  /* chrome injects styles that would otherwise override */
+  /* Chrome injects styles that would otherwise override */
   font      : inherit;
   font-size : 0;
   margin    : 0;

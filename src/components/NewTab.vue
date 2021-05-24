@@ -98,7 +98,7 @@ export default {
   bottom              : 0;
   display             : flex;
   background          : #222222;
-  /* background color transition */
+  /* Background color transition */
   transition-duration : 3s;
   overflow            : auto;
 }
